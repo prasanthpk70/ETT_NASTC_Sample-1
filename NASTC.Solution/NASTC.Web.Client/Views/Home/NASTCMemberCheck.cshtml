@@ -1,0 +1,144 @@
+﻿@model NASTC.BO.Models.NastcMemberDetails
+<style>
+    .error {
+        color: red;
+    }
+
+    .suces {
+        color: green;
+    }
+
+    .headerTitle {
+        font-family: "Segoe UI Light", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+</style>
+@{
+    ViewBag.Title = "NASTC Member Verification";
+}
+@using (Html.BeginForm("NASTCMemberCheck", "Home", FormMethod.Post, new { id = "NatscCheckForm" }))
+{
+    @Html.AntiForgeryToken()
+    <header class="help-page">
+        <div class="content-wrapper">
+            <div class="float-left">
+                <h1 class="headerTitle">@ViewBag.Title</h1>
+            </div>
+        </div>
+    </header>
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Membership Id:</label>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.MembershipId, new { @class = "form-control text-box single-line" })
+                @Html.ValidationMessageFor(model => model.MembershipId, "", new { @class = "text-danger", @maxlength = "20" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">First Name:</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger", @maxlength = "50" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Last Name:</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger", @maxlength = "50" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Company Name:</label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BusinessName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BusinessName, "", new { @class = "text-danger", @maxlength = "70" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="javascript:void(0);" onclick="ValidateMember()" class="btn btn-default">
+
+                    <img src="~/Content/Images/indicator.gif" style="float: right;margin-left: 7px; display:none;" id="loader" />
+                    Validate
+                </a>
+            </div>
+        </div>
+        <div style="margin-top:10px">
+            <div style="text-align:center;" id="msg">
+                <label class="error" id="successtext"></label>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#MembershipId").val('');
+        var formOrderValidation = $('#NatscCheckForm').get(0);
+        $.removeData(formOrderValidation, 'validator');
+        $("#NatscCheckForm").validate({
+            rules: {
+                ignore: ":not(:visible)",
+                MembershipId: {
+                    required: true
+                },
+                BusinessName: {
+                    required: true
+                }
+            },
+            messages: {
+                MembershipId: {
+                    required: "Membership Id Required"
+                },
+                BusinessName: {
+                    required: "Business Name Required"
+                }
+            },
+        });
+    });
+
+    function ValidateMember() {
+        if ($('#NatscCheckForm').valid() && $('#BusinessName').valid()) {
+            //$("#successmsg").hide();
+            $("#successtext").text('');
+            if (parseInt($("#MembershipId").val()) > 0) {
+                $('#loader').show();
+                var form = $("#NatscCheckForm").serialize();
+                $.post("/Home/NASTCMemberCheck/?t=" + new Date(), form,
+                       function (data) {
+                           if (data == "true" || data == true) {
+                               $("#successtext").removeClass("red");
+                               $("#successtext").addClass("suces");
+                               $("#successtext").text("Membership details verified Successfully");
+                               $("#successtext").css('display', 'block');
+                           }
+                           else {
+                               $("#successtext").removeClass("suces");
+                               $("#successtext").addClass("red");
+                               $("#successtext").text("Membership details mismatched");
+                               $("#successtext").css('display', 'block');
+                           }
+                           $('#loader').hide();
+                       });
+            }
+            else {
+                $("#successtext").removeClass("suces");
+                $("#successtext").addClass("red");
+                $("#successtext").text("Enter Membership Id");
+                $("#successtext").css('display', 'block');
+                $('#loader').hide();
+            }
+        }
+    }
+</script>

@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ETT_NASTC_LocalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Nastc_Application">
+          <Key>
+            <PropertyRef Name="Application_Id" />
+          </Key>
+          <Property Name="Application_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="Developer_Id" Type="bigint" Nullable="false" />
+          <Property Name="App_Id" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Public_Key" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Private_Key" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Is_Deleted" Type="bit" Nullable="false" />
+          <Property Name="Created_Time_Stamp" Type="datetime" Nullable="false" />
+          <Property Name="Updated_Time_Stamp" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Nastc_Member_Details">
+          <Key>
+            <PropertyRef Name="Member_Details_Id" />
+          </Key>
+          <Property Name="Member_Details_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Membership_Id" Type="bigint" Nullable="false" />
+          <Property Name="First_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Last_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Business_Name" Type="varchar" MaxLength="70" />
+          <Property Name="Is_Deleted" Type="bit" Nullable="false" />
+          <Property Name="Create_Time_Stamp" Type="datetime" Nullable="false" />
+          <Property Name="Update_Time_Stamp" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ETT_NASTC_LocalModelStoreContainer">
+          <EntitySet Name="Nastc_Application" EntityType="Self.Nastc_Application" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Nastc_Member_Details" EntityType="Self.Nastc_Member_Details" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ETT_NASTC_LocalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Nastc_Application">
+          <Key>
+            <PropertyRef Name="Application_Id" />
+          </Key>
+          <Property Name="Application_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Developer_Id" Type="Int64" Nullable="false" />
+          <Property Name="App_Id" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Public_Key" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Private_Key" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Is_Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="Created_Time_Stamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Updated_Time_Stamp" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Nastc_Member_Details">
+          <Key>
+            <PropertyRef Name="Member_Details_Id" />
+          </Key>
+          <Property Name="Member_Details_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Membership_Id" Type="Int64" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Business_Name" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Is_Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="Create_Time_Stamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Time_Stamp" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="ETT_NASTC_LocalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Nastc_Application" EntityType="Self.Nastc_Application" />
+          <EntitySet Name="Nastc_Member_Details" EntityType="Self.Nastc_Member_Details" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ETT_NASTC_LocalModelStoreContainer" CdmEntityContainer="ETT_NASTC_LocalEntities">
+          <EntitySetMapping Name="Nastc_Application">
+            <EntityTypeMapping TypeName="ETT_NASTC_LocalModel.Nastc_Application">
+              <MappingFragment StoreEntitySet="Nastc_Application">
+                <ScalarProperty Name="Application_Id" ColumnName="Application_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Developer_Id" ColumnName="Developer_Id" />
+                <ScalarProperty Name="App_Id" ColumnName="App_Id" />
+                <ScalarProperty Name="Public_Key" ColumnName="Public_Key" />
+                <ScalarProperty Name="Private_Key" ColumnName="Private_Key" />
+                <ScalarProperty Name="Is_Deleted" ColumnName="Is_Deleted" />
+                <ScalarProperty Name="Created_Time_Stamp" ColumnName="Created_Time_Stamp" />
+                <ScalarProperty Name="Updated_Time_Stamp" ColumnName="Updated_Time_Stamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nastc_Member_Details">
+            <EntityTypeMapping TypeName="ETT_NASTC_LocalModel.Nastc_Member_Details">
+              <MappingFragment StoreEntitySet="Nastc_Member_Details">
+                <ScalarProperty Name="Member_Details_Id" ColumnName="Member_Details_Id" />
+                <ScalarProperty Name="Membership_Id" ColumnName="Membership_Id" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Business_Name" ColumnName="Business_Name" />
+                <ScalarProperty Name="Is_Deleted" ColumnName="Is_Deleted" />
+                <ScalarProperty Name="Create_Time_Stamp" ColumnName="Create_Time_Stamp" />
+                <ScalarProperty Name="Update_Time_Stamp" ColumnName="Update_Time_Stamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
